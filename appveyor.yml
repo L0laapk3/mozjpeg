@@ -2,8 +2,8 @@ image: Visual Studio 2017
 configuration: Release
 
 platform:
-  - x86
   - amd64
+  - x86
 
 install:
   ## Download nasm
