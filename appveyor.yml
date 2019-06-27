@@ -17,8 +17,8 @@ install:
   ## Download zlib
   - mkdir zlib
   - cd zlib
-  - appveyor DownloadFile https://downloads.sourceforge.net/project/gnuwin32/zlib/1.2.3/zlib-1.2.3-bin.zip -FileName zlib.zip
-  - 7z e -y zlib.zip
+  - if "%platform%"=="x64" ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/py208ijly905t22i/artifacts/zlib.7z -FileName zlib.7z ) else ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/7t6gdavf2k8u0j8i/artifacts/zlib.7z -FileName zlib.7z )
+  - 7z e -y zlib.7z
   - set ZLIB=%CD%
   - cd ..
 
