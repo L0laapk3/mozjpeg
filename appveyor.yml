@@ -15,7 +15,7 @@ install:
   - cd zlib
   - appveyor DownloadFile https://downloads.sourceforge.net/project/gnuwin32/zlib/1.2.3/zlib-1.2.3-bin.zip -FileName zlib.zip
   - 7z e -y zlib.zip
-  - set PATH=%PATH%;%CD%/bin
+  - set ZLIB=%CD%
   - cd ..
 
   ## Download libpng
@@ -23,7 +23,7 @@ install:
   - cd libpng
   - appveyor DownloadFile https://downloads.sourceforge.net/project/gnuwin32/libpng/1.2.37/libpng-1.2.37-bin.zip -FileName libpng.zip
   - 7z e -y libpng.zip
-  - set PATH=%PATH%;%CD%/bin
+  - set PNGLIB=%CD%
 
   ## Prepare cmake
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -32,7 +32,7 @@ install:
 before_build:
   - cmake --version
   - cd cmake_build
-  - cmake .. -G "Visual Studio 15 2017" -ZLIB_LIBRARY=. -DZLIB_INCLUDE_DIR=. -DPNG_LIBRARY=. -DPNG_PNG_INCLUDE_DIR=.
+  - cmake .. -G "Visual Studio 15 2017" -ZLIB_LIBRARY="%ZLIB%/bin" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/bin" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include"
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
