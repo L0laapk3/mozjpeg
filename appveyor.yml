@@ -14,7 +14,7 @@ install:
   - cd libpng
   - appveyor DownloadFile https://downloads.sourceforge.net/project/gnuwin32/libpng/1.2.37/libpng-1.2.37-bin.zip -FileName libpng.zip
   - 7z e -y libpng.zip
-  - set PATH=%PATH%;%CD%
+  - set PATH=%PATH%;%CD%/bin
 
   ## Prepare cmake
   - cd %APPVEYOR_BUILD_FOLDER%
