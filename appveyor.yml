@@ -8,8 +8,17 @@ install:
   - appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/nasm-2.14.02-win64.zip -FileName nasm.zip
   - 7z e -y nasm.zip
   - set PATH=%PATH%;%CD%
-  ## Download libpng
   - cd ..
+
+  ## Download zlib
+  - mkdir zlib
+  - cd zlib
+  - appveyor DownloadFile https://downloads.sourceforge.net/project/gnuwin32/zlib/1.2.3/zlib-1.2.3-bin.zip -FileName zlib.zip
+  - 7z e -y zlib.zip
+  - set PATH=%PATH%;%CD%/bin
+  - cd ..
+
+  ## Download libpng
   - mkdir libpng
   - cd libpng
   - appveyor DownloadFile https://downloads.sourceforge.net/project/gnuwin32/libpng/1.2.37/libpng-1.2.37-bin.zip -FileName libpng.zip
