@@ -23,4 +23,5 @@ build_script:
 
 artifacts:
  - path: cmake_build\**\Release\**\*.exe
+ - path: cmake_build\**\Release\**\*.dll
  - path: cmake_build\**\Release\**\*.lib
