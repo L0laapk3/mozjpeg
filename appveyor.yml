@@ -26,7 +26,7 @@ install:
   - mkdir libpng
   - cd libpng
   - if "%platform%"=="amd64" ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/v2b5h2epxonk19li/artifacts/libpng.7z -FileName libpng.7z ) else ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/061luddsh9mluyr0/artifacts/libpng.7z -FileName libpng.7z )
-  - 7z e -y libpng.zip
+  - 7z e -y libpng.7z
   - set PNGLIB=%CD%
 
   ## Prepare cmake
