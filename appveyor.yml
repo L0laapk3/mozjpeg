@@ -41,11 +41,12 @@ install:
 before_build:
   - cmake --version
   - cd cmake_build
-  - if "%platform%"=="amd64" (
-  cmake .. -G "Visual Studio 15 2017" -A x64 -T host=x64 -DZLIB_LIBRARY="%ZLIB%/bin/zlib1.dll" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/bin/libpng12.dll" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include"
-) else (
-  cmake .. -G "Visual Studio 15 2017" -DZLIB_LIBRARY="%ZLIB%/bin/zlib1.dll" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/bin/libpng12.dll" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include"
-)
+  - ps: >-
+      if "%platform%"=="amd64" (
+        cmake .. -G "Visual Studio 15 2017" -A x64 -T host=x64 -DZLIB_LIBRARY="%ZLIB%/bin/zlib1.dll" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/bin/libpng12.dll" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include"
+      ) else (
+        cmake .. -G "Visual Studio 15 2017" -DZLIB_LIBRARY="%ZLIB%/bin/zlib1.dll" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/bin/libpng12.dll" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include"
+      )
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
