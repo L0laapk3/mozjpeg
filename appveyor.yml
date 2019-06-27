@@ -32,7 +32,7 @@ install:
 before_build:
   - cmake --version
   - cd cmake_build
-  - cmake .. -G "Visual Studio 15 2017" -DZLIB_INCLUDE_DIR=. -DPNG_INCLUDE_DIR=.
+  - cmake .. -G "Visual Studio 15 2017" -ZLIB_LIBRARY=. -DZLIB_INCLUDE_DIR=. -DPNG_LIBRARY=. -DPNG_PNG_INCLUDE_DIR=.
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
