@@ -2,7 +2,7 @@ image: Visual Studio 2017
 configuration: Release
 
 platform:
-  - amd64
+  - x64
   - x86
 
 install:
