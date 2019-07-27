@@ -24,12 +24,10 @@ before_build:
   - cmake --version
   - cd cmake_build
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
-  - dir
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
-  - dir
-  - make cmake_build
+  - make cmake_build\Makefile
 
 artifacts:
  - path: cmake_build\**\Release\**\*.exe
