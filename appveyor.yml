@@ -27,7 +27,8 @@ before_build:
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
-  - make cmake_build\makefile
+  - dir
+  - make cmake_build
 
 artifacts:
  - path: cmake_build\**\Release\**\*.exe
