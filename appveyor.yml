@@ -15,11 +15,11 @@ install:
 before_build:
   - cmake --version
   - cd cmake_build
-  - cmake .. -G "Visual Studio 15 2017" -DPNG_SUPPORTED=NO -A x64 -T host=x64
+  - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO -A x64 -T host=x64
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
   - msbuild cmake_build\mozjpeg.sln
 
 artifacts:
- - path: cmake_build\**\Release\**\*.*
+ - path: cmake_build\**\Release\**\*.so
