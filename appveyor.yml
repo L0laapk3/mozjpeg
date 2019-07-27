@@ -16,14 +16,6 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir cmake_build
 
-  - SET "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%PATH%"
-  - SET PATH=%PATH:C:\Program Files\Git\usr\bin;=%
-  - mkdir cygwin
-  - cd cygwin
-  - ps: Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile cygwin-setup.exe
-  - cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,libopenmpi-devel,cmake,libboost-devel,libhdf5-devel,libfftw3-devel,zlib-devel
-  - cd ..
-
 before_build:
   - cmake --version
 
