@@ -1,7 +1,9 @@
 image: Visual Studio 2017
 configuration: Release
-Compiler: cygwin
-Arch: x64
+
+environment:
+    Compiler: cygwin
+    Arch: x64
  
 install:
   ## Download nasm
