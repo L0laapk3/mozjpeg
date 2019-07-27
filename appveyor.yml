@@ -1,6 +1,6 @@
 image: Visual Studio 2017
 configuration: Release
-
+ 
 install:
   ## Download nasm
   - mkdir nasm
