@@ -26,8 +26,7 @@ before_build:
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
 
 build_script: 
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - msbuild cmake_build\mozjpeg.sln
+  - make
 
 artifacts:
  - path: cmake_build\**\Release\**\*.exe
