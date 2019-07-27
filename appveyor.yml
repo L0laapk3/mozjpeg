@@ -12,10 +12,17 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir cmake_build
 
+  - SET "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%PATH%"
+  - SET PATH=%PATH:C:\Program Files\Git\usr\bin;=%
+  - mkdir cygwin-downloads
+  - ps: Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile C:\projects\deps\cygwin-setup.exe
+  - C:\projects\deps\cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --root C:\cygwin64 --local-package-dir C:\projects\deps\cygwin-downloads --packages gcc-g++,libopenmpi-devel,cmake,libboost-devel,libhdf5-devel,libfftw3-devel,zlib-devel
+  - cd ..
+
 before_build:
   - cmake --version
   - cd cmake_build
-  - cmake .. -G "Visual Studio 15 2017" -DPNG_SUPPORTED=NO -A x64 -T host=x64
+  - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO -A x64 -T host=x64
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
