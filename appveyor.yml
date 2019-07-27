@@ -1,10 +1,6 @@
 image: Visual Studio 2017
 configuration: Release
 
-platform:
-  - x64
-  - x86
-
 install:
   ## Download nasm
   - mkdir nasm
@@ -12,23 +8,6 @@ install:
   - appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/nasm-2.14.02-win64.zip -FileName nasm.zip
   - 7z e -y nasm.zip
   - set PATH=%PATH%;%CD%
-  - cd ..
-
-  ## Download zlib
-  - mkdir zlib
-  - cd zlib
-  - if "%platform%"=="x64" ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/py208ijly905t22i/artifacts/zlib.7z -FileName zlib.7z ) else ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/7t6gdavf2k8u0j8i/artifacts/zlib.7z -FileName zlib.7z )
-  - 7z e -y zlib.7z
-  - set ZLIB=%CD%
-  - cd ..
-
-  ## Download libpng
-  - mkdir libpng
-  - cd libpng
-  - if "%platform%"=="x64" ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/v2b5h2epxonk19li/artifacts/libpng.7z -FileName libpng.7z ) else ( appveyor DownloadFile https://ci.appveyor.com/api/buildjobs/061luddsh9mluyr0/artifacts/libpng.7z -FileName libpng.7z )
-  - 7z e -y libpng.7z
-  - set PNGLIB=%CD%
-
   ## Prepare cmake
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir cmake_build
@@ -36,7 +15,7 @@ install:
 before_build:
   - cmake --version
   - cd cmake_build
-  - if "%platform%"=="x64" ( cmake .. -G "Visual Studio 15 2017" -A x64 -T host=x64 -DZLIB_LIBRARY="%ZLIB%/bin/zlib1.dll" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/lib/libpng.lib" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include" ) else ( cmake .. -G "Visual Studio 15 2017" -DZLIB_LIBRARY="%ZLIB%/bin/zlib1.dll" -DZLIB_INCLUDE_DIR="%ZLIB%/include" -DPNG_LIBRARY="%PNGLIB%/lib/libpng.lib" -DPNG_PNG_INCLUDE_DIR="%PNGLIB%/include" )
+  - cmake .. -G "Visual Studio 15 2017" -DPNG_SUPPORTED=NO
 
 build_script: 
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -44,5 +23,6 @@ build_script:
 
 artifacts:
  - path: cmake_build\**\Release\**\*.exe
- - path: cmake_build\**\Release\**\*.dll
  - path: cmake_build\**\Release\**\*.lib
+ - path: cmake_build\**\Release\**\*.dll
+ - path: cmake_build\**\Release\**\*.so
