@@ -27,5 +27,5 @@ build_script:
   - make
 
 artifacts:
- - path: **\*.so
- - path: **\*.dylib
+- path: cmake_build\**\*.so
+- path: cmake_build\**\*.dylib
