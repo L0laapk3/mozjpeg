@@ -1,5 +1,7 @@
 image: Visual Studio 2017
 configuration: Release
+Compiler: cygwin
+Arch: x64
  
 install:
   ## Download nasm
@@ -17,7 +19,7 @@ install:
   - mkdir cygwin
   - cd cygwin
   - ps: Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile cygwin-setup.exe
-  - cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --root C:\cygwin64 --packages gcc-g++,libopenmpi-devel,cmake,libboost-devel,libhdf5-devel,libfftw3-devel,zlib-devel
+  - cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,libopenmpi-devel,cmake,libboost-devel,libhdf5-devel,libfftw3-devel,zlib-devel
   - cd ..
 
 before_build:
