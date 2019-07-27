@@ -594,17 +594,7 @@ if(WITH_TURBOJPEG)
     endif()
 
 
-    add_executable(tjbench tjbench.c tjutil.c)
-    target_link_libraries(tjbench turbojpeg)
-    if(UNIX)
-      target_link_libraries(tjbench m)
-    endif()
 
-    add_executable(tjexample tjexample.c)
-    target_link_libraries(tjexample turbojpeg)
-    if(UNIX)
-      target_link_libraries(tjexample m)
-    endif()
   endif()
 
   if(ENABLE_STATIC)
@@ -618,11 +608,6 @@ if(WITH_TURBOJPEG)
     endif()
 
 
-    add_executable(tjbench-static tjbench.c tjutil.c)
-    target_link_libraries(tjbench-static turbojpeg-static)
-    if(UNIX)
-      target_link_libraries(tjbench-static m)
-    endif()
   endif()
 endif()
 
@@ -903,59 +888,7 @@ foreach(libtype ${TEST_LIBTYPES})
 
     # Test compressing from/decompressing to an arbitrary subregion of a larger
     # image buffer
-    add_test(tjbench-${libtype}-tile-cp
-      ${CMAKE_COMMAND} -E copy_if_different ${TESTIMAGES}/testorig.ppm
-        testout_tile.ppm)
-    add_test(tjbench-${libtype}-tile
-      tjbench${suffix} testout_tile.ppm 95 -rgb -quiet -tile -benchtime 0.01
-        -warmup 0)
-    set_tests_properties(tjbench-${libtype}-tile
-      PROPERTIES DEPENDS tjbench-${libtype}-tile-cp)
 
-    foreach(tile 8 16 32 64 128)
-      add_test(tjbench-${libtype}-tile-gray-${tile}x${tile}-cmp
-        ${MD5CMP} ${MD5_PPM_GRAY_TILE}
-          testout_tile_GRAY_Q95_${tile}x${tile}.ppm)
-      foreach(subsamp 420 422)
-        add_test(tjbench-${libtype}-tile-${subsamp}-${tile}x${tile}-cmp
-          ${MD5CMP} ${MD5_PPM_${subsamp}_${tile}x${tile}_TILE}
-            testout_tile_${subsamp}_Q95_${tile}x${tile}.ppm)
-      endforeach()
-      add_test(tjbench-${libtype}-tile-444-${tile}x${tile}-cmp
-        ${MD5CMP} ${MD5_PPM_444_TILE}
-          testout_tile_444_Q95_${tile}x${tile}.ppm)
-      foreach(subsamp gray 420 422 444)
-        set_tests_properties(tjbench-${libtype}-tile-${subsamp}-${tile}x${tile}-cmp
-          PROPERTIES DEPENDS tjbench-${libtype}-tile)
-      endforeach()
-    endforeach()
-
-    add_test(tjbench-${libtype}-tilem-cp
-      ${CMAKE_COMMAND} -E copy_if_different ${TESTIMAGES}/testorig.ppm
-        testout_tilem.ppm)
-    add_test(tjbench-${libtype}-tilem
-      tjbench${suffix} testout_tilem.ppm 95 -rgb -fastupsample -quiet -tile
-        -benchtime 0.01 -warmup 0)
-    set_tests_properties(tjbench-${libtype}-tilem
-      PROPERTIES DEPENDS tjbench-${libtype}-tilem-cp)
-
-    add_test(tjbench-${libtype}-tile-420m-8x8-cmp
-      ${MD5CMP} ${MD5_PPM_420M_8x8_TILE} testout_tilem_420_Q95_8x8.ppm)
-    add_test(tjbench-${libtype}-tile-422m-8x8-cmp
-      ${MD5CMP} ${MD5_PPM_422M_8x8_TILE} testout_tilem_422_Q95_8x8.ppm)
-    foreach(tile 16 32 64 128)
-      foreach(subsamp 420 422)
-        add_test(tjbench-${libtype}-tile-${subsamp}m-${tile}x${tile}-cmp
-          ${MD5CMP} ${MD5_PPM_${subsamp}M_TILE}
-            testout_tilem_${subsamp}_Q95_${tile}x${tile}.ppm)
-      endforeach()
-    endforeach()
-    foreach(tile 8 16 32 64 128)
-      foreach(subsamp 420 422)
-        set_tests_properties(tjbench-${libtype}-tile-${subsamp}m-${tile}x${tile}-cmp
-          PROPERTIES DEPENDS tjbench-${libtype}-tilem)
-      endforeach()
-    endforeach()
   endif()
 
   # These tests are carefully crafted to provide full coverage of as many of
@@ -1257,54 +1190,6 @@ endforeach()
 add_custom_target(testclean COMMAND ${CMAKE_COMMAND} -P
   ${CMAKE_CURRENT_SOURCE_DIR}/cmakescripts/testclean.cmake)
 
-if(WITH_TURBOJPEG)
-  configure_file(tjbenchtest.in tjbenchtest @ONLY)
-  configure_file(tjexampletest.in tjexampletest @ONLY)
-  if(WIN32)
-    set(BASH bash)
-  endif()
-  if(WITH_JAVA)
-    configure_file(tjbenchtest.java.in tjbenchtest.java @ONLY)
-    configure_file(tjexampletest.java.in tjexampletest.java @ONLY)
-    add_custom_target(tjtest
-      COMMAND echo tjbenchtest
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest
-      COMMAND echo tjbenchtest -alloc
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -alloc
-      COMMAND echo tjbenchtest -yuv
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -yuv
-      COMMAND echo tjbenchtest -yuv -alloc
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -yuv -alloc
-      COMMAND echo tjbenchtest -progressive
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -progressive
-      COMMAND echo tjexampletest
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjexampletest
-      COMMAND echo tjbenchtest.java
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest.java
-      COMMAND echo tjbenchtest.java -yuv
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest.java -yuv
-      COMMAND echo tjbenchtest.java -progressive
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest.java -progressive
-      COMMAND echo tjexampletest.java
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjexampletest.java
-      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest
-        ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest.java
-        ${CMAKE_CURRENT_BINARY_DIR}/tjexampletest)
-  else()
-    add_custom_target(tjtest
-      COMMAND echo tjbenchtest
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest
-      COMMAND echo tjbenchtest -alloc
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -alloc
-      COMMAND echo tjbenchtest -yuv
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -yuv
-      COMMAND echo tjbenchtest -yuv -alloc
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest -yuv -alloc
-      COMMAND echo tjexampletest
-      COMMAND ${BASH} ${CMAKE_CURRENT_BINARY_DIR}/tjexampletest
-      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/tjbenchtest)
-  endif()
-endif()
 
 
 ###############################################################################
@@ -1315,7 +1200,7 @@ set(EXE ${CMAKE_EXECUTABLE_SUFFIX})
 
 if(WITH_TURBOJPEG)
   if(ENABLE_SHARED)
-    install(TARGETS turbojpeg tjbench
+    install(TARGETS turbojpeg
       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
@@ -1323,10 +1208,6 @@ if(WITH_TURBOJPEG)
   if(ENABLE_STATIC)
     install(TARGETS turbojpeg-static ARCHIVE
       DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    if(NOT ENABLE_SHARED)
-      install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/tjbench-static${EXE}
-        DESTINATION ${CMAKE_INSTALL_BINDIR} RENAME tjbench${EXE})
-    endif()
   endif()
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/turbojpeg.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
@@ -1348,15 +1229,10 @@ install(TARGETS rdjpgcom wrjpgcom RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/README.ijg
   ${CMAKE_CURRENT_SOURCE_DIR}/README.md ${CMAKE_CURRENT_SOURCE_DIR}/example.txt
-  ${CMAKE_CURRENT_SOURCE_DIR}/tjexample.c
   ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/structure.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/usage.txt ${CMAKE_CURRENT_SOURCE_DIR}/wizard.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md DESTINATION ${CMAKE_INSTALL_DOCDIR})
-if(WITH_JAVA)
-  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/java/TJExample.java
-    DESTINATION ${CMAKE_INSTALL_DOCDIR})
-endif()
 
 if(UNIX OR MINGW)
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cjpeg.1
