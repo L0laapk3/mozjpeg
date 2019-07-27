@@ -593,11 +593,6 @@ if(WITH_TURBOJPEG)
         LINK_FLAGS "${TJMAPFLAG}${TJMAPFILE}")
     endif()
 
-    add_executable(tjunittest tjunittest.c tjutil.c md5/md5.c md5/md5hl.c)
-    target_link_libraries(tjunittest turbojpeg)
-    if(UNIX)
-      target_link_libraries(tjunittest m)
-    endif()
 
     add_executable(tjbench tjbench.c tjutil.c)
     target_link_libraries(tjbench turbojpeg)
@@ -622,12 +617,6 @@ if(WITH_TURBOJPEG)
       set_target_properties(turbojpeg-static PROPERTIES OUTPUT_NAME turbojpeg)
     endif()
 
-    add_executable(tjunittest-static tjunittest.c tjutil.c md5/md5.c
-      md5/md5hl.c)
-    target_link_libraries(tjunittest-static turbojpeg-static)
-    if(UNIX)
-      target_link_libraries(tjunittest-static m)
-    endif()
 
     add_executable(tjbench-static tjbench.c tjutil.c)
     target_link_libraries(tjbench-static turbojpeg-static)
@@ -819,33 +808,6 @@ else()
   set(MD5_JPEG_CROP b4197f377e621c4e9b1d20471432610d)
 endif()
 
-if(WITH_JAVA)
-  add_test(TJUnitTest
-    ${Java_JAVA_EXECUTABLE} ${JAVAARGS} -cp java/turbojpeg.jar
-      -Djava.library.path=${CMAKE_CURRENT_BINARY_DIR}/${OBJDIR}
-      TJUnitTest)
-  add_test(TJUnitTest-yuv
-    ${Java_JAVA_EXECUTABLE} ${JAVAARGS} -cp java/turbojpeg.jar
-      -Djava.library.path=${CMAKE_CURRENT_BINARY_DIR}/${OBJDIR}
-      TJUnitTest -yuv)
-  add_test(TJUnitTest-yuv-nopad
-    ${Java_JAVA_EXECUTABLE} ${JAVAARGS} -cp java/turbojpeg.jar
-      -Djava.library.path=${CMAKE_CURRENT_BINARY_DIR}/${OBJDIR}
-      TJUnitTest -yuv -noyuvpad)
-  add_test(TJUnitTest-bi
-    ${Java_JAVA_EXECUTABLE} ${JAVAARGS} -cp java/turbojpeg.jar
-      -Djava.library.path=${CMAKE_CURRENT_BINARY_DIR}/${OBJDIR}
-      TJUnitTest -bi)
-  add_test(TJUnitTest-bi-yuv
-    ${Java_JAVA_EXECUTABLE} ${JAVAARGS} -cp java/turbojpeg.jar
-      -Djava.library.path=${CMAKE_CURRENT_BINARY_DIR}/${OBJDIR}
-      TJUnitTest -bi -yuv)
-  add_test(TJUnitTest-bi-yuv-nopad
-    ${Java_JAVA_EXECUTABLE} ${JAVAARGS} -cp java/turbojpeg.jar
-      -Djava.library.path=${CMAKE_CURRENT_BINARY_DIR}/${OBJDIR}
-      TJUnitTest -bi -yuv -noyuvpad)
-endif()
-
 set(TEST_LIBTYPES "")
 if(ENABLE_SHARED)
   set(TEST_LIBTYPES ${TEST_LIBTYPES} shared)
@@ -921,12 +883,6 @@ foreach(libtype ${TEST_LIBTYPES})
     set(suffix -static)
   endif()
   if(WITH_TURBOJPEG)
-    add_test(tjunittest-${libtype} tjunittest${suffix})
-    add_test(tjunittest-${libtype}-alloc tjunittest${suffix} -alloc)
-    add_test(tjunittest-${libtype}-yuv tjunittest${suffix} -yuv)
-    add_test(tjunittest-${libtype}-yuv-alloc tjunittest${suffix} -yuv -alloc)
-    add_test(tjunittest-${libtype}-yuv-nopad tjunittest${suffix} -yuv -noyuvpad)
-    add_test(tjunittest-${libtype}-bmp tjunittest${suffix} -bmp)
 
     set(MD5_PPM_GRAY_TILE 89d3ca21213d9d864b50b4e4e7de4ca6)
     set(MD5_PPM_420_8x8_TILE 847fceab15c5b7b911cb986cf0f71de3)
