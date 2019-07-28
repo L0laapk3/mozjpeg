@@ -22,4 +22,5 @@ build_script:
   - make
 
 artifacts:
-- path: cmake_build\**\*.so.0.2.0
+- path: cmake_build\**\libturbojpeg.so.0.2.0
+- path: cmake_build\**\*.so
