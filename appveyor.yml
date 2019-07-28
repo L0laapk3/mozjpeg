@@ -32,4 +32,5 @@ build_script:
 artifacts:
 - path: cmake_build\**\*.so
 - path: cmake_build\**\*.dylib
-- path: cmake_build\**\*.*
+- path: cmake_build\**\*.dll
+- path: cmake_build\**\*.lib
