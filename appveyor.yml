@@ -8,11 +8,7 @@ environment:
  
 install:
   ## Download nasm
-  - mkdir nasm
-  - export ASM_NASM=$(pwd)
-  - cd nasm
-  - appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/nasm-2.14.02-win64.zip -FileName nasm.zip
-  - 7z e -y nasm.zip
+  - sudo apt-get install nasm
   ## Prepare cmake
   - cd ${APPVEYOR_BUILD_FOLDER}
   - mkdir cmake_build
@@ -30,5 +26,3 @@ artifacts:
 - path: cmake_build\**\*.dylib
 - path: cmake_build\**\*.dll
 - path: cmake_build\**\*.lib
-- path: cmake_build\**\*.*
- 
