@@ -18,10 +18,11 @@ install:
   - mkdir cmake_build
 
 before_build:
+  - chmod -R 777 cmake_build
+  - cd cmake_build
   - cmake --version
 
 build_script: 
-  - cd cmake_build
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
   - make
 
