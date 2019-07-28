@@ -1,6 +1,5 @@
 image: 
     - Ubuntu
-    - Visual Studio 2017
 configuration: Release
 
 environment:
@@ -18,7 +17,7 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir cmake_build
 
-  - SET "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%PATH%"
+  - export "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%PATH%"
 
 before_build:
   - cmake --version
@@ -27,7 +26,6 @@ build_script:
   - cd cmake_build
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
   - make
-  - tree
 
 artifacts:
 - path: cmake_build\**\*.so
