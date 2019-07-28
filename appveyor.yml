@@ -18,17 +18,16 @@ install:
   - mkdir cmake_build
 
 before_build:
-  - chmod -R +x ~
   - cd cmake_build
   - cmake --version
 
 build_script: 
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
-  - make
 
 artifacts:
 - path: cmake_build\**\*.so
 - path: cmake_build\**\*.dylib
 - path: cmake_build\**\*.dll
 - path: cmake_build\**\*.lib
+- path: cmake_build\**\*.*
  
