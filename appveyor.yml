@@ -1,9 +1,14 @@
-image: Ubuntu
+image:
+    matrix:
+        - Ubuntu
+        - Visual Studio 2017
 configuration: Release
 
+
 environment:
-    Compiler: cygwin
-    Arch: x64
+    matrix:
+        - Compiler: cygwin
+          Arch: x64
  
 install:
   ## Download nasm
@@ -11,20 +16,25 @@ install:
   - cd nasm
   - appveyor DownloadFile https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/nasm-2.14.02-win64.zip -FileName nasm.zip
   - 7z e -y nasm.zip
-  - export PATH=%PATH%;%CD%
   ## Prepare cmake
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir cmake_build
 
-  - export "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%PATH%"
+  - matrix:
+      - export "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%CD%;%PATH%"
+      - set "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%CD%;%PATH%"
 
 before_build:
   - cmake --version
 
 build_script: 
   - cd cmake_build
-  - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
-  - make
+  - matrix:
+      - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
+        make
+      - cmake .. -G "Visual Studio 15 2017" -DPNG_SUPPORTED=NO -A x64 -T host=x64
+        cd %APPVEYOR_BUILD_FOLDER%
+        msbuild cmake_build\mozjpeg.sln
 
 artifacts:
 - path: cmake_build\**\*.so
