@@ -1,5 +1,4 @@
-image: 
-    - Ubuntu
+image: Ubuntu
 configuration: Release
 
 environment:
