@@ -22,4 +22,4 @@ build_script:
   - make
 
 artifacts:
-- path: cmake_build\**\*.*
+- path: cmake_build\**\*.so.*
