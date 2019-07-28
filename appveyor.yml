@@ -23,4 +23,5 @@ build_script:
 
 artifacts:
 - path: cmake_build\**\libturbojpeg.so.0.2.0
-- path: cmake_build\**\*.so
+# Theres currently a bug with appveyor, this is a symlink and it does not like that at all
+# - path: cmake_build\**\*.so
