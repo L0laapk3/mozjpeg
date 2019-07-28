@@ -21,7 +21,9 @@ build_script:
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
   - make
 
+after_build:
+# Theres currently a bug with appveyor, it crashes on uploading symlinked artifacts
+    find cmake_build -type l -delete
+
 artifacts:
-- path: cmake_build\**\libturbojpeg.so.0.2.0
-# Theres currently a bug with appveyor, this is a symlink and it does not like that at all
-# - path: cmake_build\**\*.so
+- path: cmake_build\**\*.so.*
