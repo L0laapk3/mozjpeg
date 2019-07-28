@@ -23,6 +23,7 @@ before_build:
 
 build_script: 
   - cmake .. -G "Unix Makefiles" -DPNG_SUPPORTED=NO
+  - make
 
 artifacts:
 - path: cmake_build\**\*.so
