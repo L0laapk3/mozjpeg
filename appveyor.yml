@@ -23,7 +23,7 @@ build_script:
 
 after_build:
 # Theres currently a bug with appveyor, it crashes on uploading symlinked artifacts
-    find cmake_build -type l -delete
+    find . -type l -delete
 
 artifacts:
 - path: cmake_build\**\*.so.*
