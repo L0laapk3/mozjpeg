@@ -22,7 +22,4 @@ build_script:
   - make
 
 artifacts:
-- path: cmake_build\**\*.so
-- path: cmake_build\**\*.dylib
-- path: cmake_build\**\*.dll
-- path: cmake_build\**\*.lib
+- path: cmake_build\**\*.*
