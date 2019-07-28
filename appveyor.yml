@@ -18,7 +18,7 @@ install:
   - mkdir cmake_build
 
 before_build:
-  - chmod -R 777 cmake_build
+  - chmod -R 777 ~
   - cd cmake_build
   - cmake --version
 
