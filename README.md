@@ -1,7 +1,7 @@
 Mozilla JPEG Encoder Project
 ============================
 
-# 64 bit Compiled libraries of mozjpeg for windows and unix.
+# 64 bit Compiled libraries of mozjpeg for both windows and unix.
 
-[**windows appveyor link**](https://ci.appveyor.com/project/L0laapk3/mozjpeg/history?branch=appveyor_win)  
-[**unix appveyor link**](https://ci.appveyor.com/project/L0laapk3/mozjpeg/history?branch=appveyor_unix)  
+[![Windows binaries](https://ci.appveyor.com/api/projects/status/github/L0laapk3/mozjpeg?branch=appveyor_win&svg=true)](https://ci.appveyor.com/project/L0laapk3/mozjpeg/branch/appveyor_win/artifacts)
+[![Unix binaries](https://ci.appveyor.com/api/projects/status/github/L0laapk3/mozjpeg?branch=appveyor_unix&svg=true)](https://ci.appveyor.com/project/L0laapk3/mozjpeg/branch/appveyor_unix/artifacts)
