@@ -27,3 +27,4 @@ MozJPEG is meant to be used as a library in graphics programs and image processi
 ## Compiling
 
 See [BUILDING](BUILDING.md).
+
