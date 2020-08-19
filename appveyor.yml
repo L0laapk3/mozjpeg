@@ -26,4 +26,4 @@ after_build:
     find . -type l -delete
 
 artifacts:
-- path: cmake_build\**\*.so.
+- path: cmake_build\**\*.*
